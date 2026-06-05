@@ -1,3 +1,5 @@
+import renderRoute from "../router/routes.js"
+
 export default function layout() {
   const user = JSON.parse(localStorage.getItem("user"))
 
@@ -13,8 +15,8 @@ export default function layout() {
     </header>
     <section class="flex min-h-screen">
       <aside class="bg-sky-700 w-48 py-6 px-3 flex flex-col gap-2">
-        <a href="/dashboard" class="text-white px-3 py-2 rounded hover:bg-sky-600">Dashboard</a>
-        <a href="/projects" class="text-white px-3 py-2 rounded hover:bg-sky-600">Projects</a>
+        <a href="/dashboard" class="spa-link text-white px-3 py-2 rounded hover:bg-sky-600">Dashboard</a>
+        <a href="/projects" class="spa-link text-white px-3 py-2 rounded hover:bg-sky-600">Projects</a>
       </aside>
       <main id="principal_content" class="flex-1 bg-gray-100 p-6"></main>
     </section>`

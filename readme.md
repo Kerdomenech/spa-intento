@@ -1,8 +1,8 @@
 # Project Manager SPA
 
 ## Description
-Internal project management tool built as a Single Page Application (SPA). 
-It allows companies to manage projects with role-based access control, 
+Internal project management tool built as a Single Page Application (SPA).
+It allows companies to manage projects with role-based access control,
 session persistence, and full CRUD operations via a simulated REST API.
 
 ## Technologies
@@ -30,13 +30,13 @@ npx json-server --watch database/db.json --port 5000
 
 ## Test Users
 
-| Name         | Email             | Password | Role         |
-|--------------|-------------------|----------|--------------|
-| Manager      | manager@test.com  | asdasd   | manager      |
-| Collaborator | user@test.com     | sasa     | collaborator |
+| Name         | Email            | Password | Role         |
+|--------------|------------------|----------|--------------|
+| Manager      | manager@test.com | asdasd   | manager      |
+| Collaborator | user@test.com    | sasa     | collaborator |
 
 ## Project Structure
-
+```
 src/
 ├── components/
 │   └── layout.js
@@ -58,25 +58,25 @@ src/
 └── style.css
 database/
 └── db.json
+```
 
 ## Role Permissions
 
-| Action              | Manager | Collaborator |
-|---------------------|---------|--------------|
-| View all projects   | ✅      | ❌           |
-| View own projects   | ✅      | ✅           |
-| Create project      | ✅      | ❌           |
-| Edit project        | ✅      | ❌           |
-| Delete project      | ✅      | ❌           |
-| Update own status   | ✅      | ✅           |
+| Action            | Manager | Collaborator |
+|-------------------|---------|--------------|
+| View all projects | ✅      | ❌           |
+| View own projects | ✅      | ✅           |
+| Create project    | ✅      | ❌           |
+| Edit project      | ✅      | ❌           |
+| Delete project    | ✅      | ❌           |
+| Update own status | ✅      | ✅           |
 
 ## Technical Decisions
-- **SPA routing** is handled with `history.pushState` and a custom router, 
+- **SPA routing** is handled with `history.pushState` and a custom router,
   avoiding full page reloads.
-- **Session persistence** uses `localStorage` to keep the user logged in 
+- **Session persistence** uses `localStorage` to keep the user logged in
   after refreshing the page.
-- **Role-based access** is enforced both in the router (redirect) and in 
+- **Role-based access** is enforced both in the router (redirect) and in
   the UI (conditional rendering of buttons).
 - **JSON Server** runs on port 5000 and acts as the REST API backend.
 - **Fetch API** is used for all HTTP requests (GET, POST, PUT, PATCH, DELETE).
-

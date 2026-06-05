@@ -31,16 +31,16 @@ export default async function renderRoute() {
 
   const route = routes[path]
 
- // Sin sesión → redirige a login
+  // Sin sesión → redirige a login
   if (!user && !route?.public) {
-    window.history.pushState({}, "", "/login") // Cambio limpio sin recargar
+    window.history.pushState({}, "", "/login")
     renderRoute()
     return
   }
 
   // Ya logueado intentando ir a /login → redirige al dashboard
   if (user && path === "/login") {
-    window.history.pushState({}, "", "/dashboard") // Cambio limpio sin recargar
+    window.history.pushState({}, "", "/dashboard")
     renderRoute()
     return
   }
@@ -51,6 +51,13 @@ export default async function renderRoute() {
     return
   }
 
+  // Rol insuficiente → redirige al dashboard
+  if (route.role && user?.role !== route.role) {
+    window.history.pushState({}, "", "/dashboard")
+    renderRoute()
+    return
+  }
+
   // Ruta pública (login) — sin layout
   if (route.public) {
     container.innerHTML = route.view()
@@ -58,28 +65,25 @@ export default async function renderRoute() {
     return
   }
 
- 
-  container.innerHTML = layout() // 1. Pintamos el cascarón (Header, Sidebar y contenedor principal)
+  container.innerHTML = layout()
 
-  // 2. ¡La pieza faltante!: Ejecutamos el controlador de la ruta actual 
-  //    para que llene el '#principal_content'.
   if (route.controller) {
     await route.controller()
   }
 
-  // Configuración del botón de Logout que ya tenías
+  // Logout
   document.getElementById("btn-logout")?.addEventListener("click", () => {
     localStorage.removeItem("user")
     window.history.pushState({}, "", "/login")
     renderRoute()
   })
 
-  // Interceptar clicks en links SPA para no recargar la página
-document.querySelectorAll(".spa-link").forEach(link => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault()
-    window.history.pushState({}, "", link.href)
-    renderRoute()
+  // Interceptar clicks en links SPA
+  document.querySelectorAll(".spa-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault()
+      window.history.pushState({}, "", link.href)
+      renderRoute()
+    })
   })
-})
 }
